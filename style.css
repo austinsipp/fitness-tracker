@@ -1,0 +1,36 @@
+
+header {
+  background: rgb(78, 193, 238);
+  height: 50px;
+
+  
+}
+
+
+
+nav ul {
+  
+  margin: 0;
+  padding: 0px;
+  list-style: none;
+  text-align: center;
+  word-spacing: 40px;
+  font-size: 30px;
+ 
+  
+}
+
+nav li {
+  display: inline-block;
+  color: white;
+
+}
+
+.fitness {
+
+ 
+}
+
+.contact {
+  color: aqua;
+}

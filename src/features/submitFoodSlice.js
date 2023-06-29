@@ -1,20 +1,35 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 import { createClient } from '@supabase/supabase-js'
+//require('dotenv').config()
 
 const supabaseUrl = 'https://mgksxejsytiekgoegymi.supabase.co'
 //const supabaseKey = process.env.SUPABASE_KEY
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1na3N4ZWpzeXRpZWtnb2VneW1pIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODc5MDY0ODIsImV4cCI6MjAwMzQ4MjQ4Mn0.8ZrhQ99WNx320VtwJpp59kGOUQc-ebwHaUeQIfl5_vQ"
+const supabaseKey="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1na3N4ZWpzeXRpZWtnb2VneW1pIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODc5MDY0ODIsImV4cCI6MjAwMzQ4MjQ4Mn0.8ZrhQ99WNx320VtwJpp59kGOUQc-ebwHaUeQIfl5_vQ"
 const supabase = createClient(supabaseUrl, supabaseKey)
+/*
+async function getData () {
+    const dataFromSupabase = await supabase.from('foodDataTest').select()
+    return dataFromSupabase
+}
 
-
+const data = await getData().data
+*/
+/*
 const initialState = {
     foodData: [{
         foodItemName: '',
         calories: 0
     }
     ]
+}*/
+
+const initialState = {
+    foodData: [],
+    displayData: [{test:"test"}]
 }
+
+
 
 export const submitFoodSlice = createSlice({
     name: 'submitData',
@@ -32,42 +47,25 @@ export const submitFoodSlice = createSlice({
                 console.log("response is:",response)
             }
             sendData(action.payload)
-            debugger
-            /*Object.keys(state).forEach((key) => {
-                if( key === itemName) {
-                    state[itemName].quantity += quantity
-                } else {
-                    state[itemName]={quantity}
-                }
-            })*/
-            /*if (state[itemName]) {
-                state[itemName].quantity += quantity
-            } else {
-                state[itemName]={quantity}
-            }*/
-            /*
-            if (newState[foodItemName]) {
-                newState[foodItemName].calories += calories
-            } else {
-                newState[foodItemName]={calories}
-            }*/
             return newState
         }/*,
-        use: (state, action) => {
-            const {itemName, quantity} = action.payload
+        getFromDatabase: async (state) => {
             let newState = state
-            if (newState[itemName] && newState[itemName].quantity >= quantity) {
-                newState[itemName].quantity -= quantity
-            } else {
-                newState.error = `You only have ${newState[itemName].quantity} ${itemName}, you cannot remove more than that from inventory!`
+            async function getData () {
+                const response = await supabase.from('foodDataTest').select()
+                console.log("response is:",response)
+                return response
             }
+            
+            console.log("look here",await getData())
+            let data = await getData()
+            
+            newState.displayData.push(data)
+            
             return newState
-        },
-        acknowledgeError: (state) => {
-            return{...state, error:''}
         }*/
     }
 })
 
-export const { submit } = submitFoodSlice.actions
+export const { submit  } = submitFoodSlice.actions
 export default submitFoodSlice.reducer

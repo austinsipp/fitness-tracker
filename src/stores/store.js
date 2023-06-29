@@ -3,6 +3,6 @@ import currentEntryReducer from '../features/submitFoodSlice'
 
 export const store = configureStore({
     reducer: {
-        currentEntryMethods: currentEntryReducer
+        currentState: currentEntryReducer
     }
 })

@@ -39,7 +39,7 @@ export const submitFoodSlice = createSlice({
             //const { foodItemName, calories } = action.payload
             let newState = state
             console.log(action.payload)
-            newState.foodData.push(action.payload)
+            //newState.foodData.push(action.payload)
             console.log("foodData:", newState.foodData)
             
             async function sendData (sentRecord) {
@@ -47,6 +47,22 @@ export const submitFoodSlice = createSlice({
                 console.log("response is:",response)
             }
             sendData(action.payload)
+            return newState
+        },
+        deleteRecord: (state, action) => {
+            //const { foodItemName, calories } = action.payload
+            let newState = state
+            console.log(action.payload)
+            //newState.foodData.push(action.payload)
+            //console.log("foodData:", newState.foodData)
+            
+            async function deleteData (sentRecord) {
+                const response = await supabase.from('foodDataTest').delete(sentRecord).eq("id",action.payload)
+                console.log("response is:",response)
+                debugger
+            }
+            deleteData(action.payload)
+            
             return newState
         }/*,
         getFromDatabase: async (state) => {
@@ -67,5 +83,5 @@ export const submitFoodSlice = createSlice({
     }
 })
 
-export const { submit  } = submitFoodSlice.actions
+export const { submit, deleteRecord  } = submitFoodSlice.actions
 export default submitFoodSlice.reducer

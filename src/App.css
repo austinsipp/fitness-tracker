@@ -36,3 +36,59 @@
     transform: rotate(360deg);
   }
 }
+
+
+nav ul {
+  margin: 0;
+  padding: 5px;
+  list-style: none;
+  text-align: center;
+  /*word-spacing: 40px;*/
+  font-size: 30px; 
+  background-color:  rgb(94, 167, 245);
+}
+
+nav li {
+  display: inline-block;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  border-left: solid white 3px;
+  border-right: solid white 3px;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+}
+
+.home-page {
+  background-color: rgb(172, 209, 248);
+}
+
+img {
+  padding: 0;
+  margin: 0;
+  align-content: center;
+  width: 100%;
+}
+
+.intro {
+  text-align: center;
+  background-color: azure;
+  padding: 30px;
+  margin: 100px;
+  position: absolute;
+  top: 45%;
+
+}
+
+.selectedTab {
+  border-left: solid gray 3px;
+  border-right: solid gray 3px;
+}
+
+.selectedTabLink {
+  color:gray;
+}

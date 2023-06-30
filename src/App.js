@@ -1,12 +1,14 @@
 
 import './App.css';
-import LogFood from './components/LogFood'
+
+
+import HomePage from './components/HomePage'
 
 
 function App() {
   return (
     <div className="App">
-      <LogFood />
+      <HomePage />
     </div>
   );
 }

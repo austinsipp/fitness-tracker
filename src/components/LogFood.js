@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import {submit} from '../features/submitFoodSlice'
+import {submit, deleteRecord} from '../features/submitFoodSlice'
 import { createClient } from '@supabase/supabase-js'
 //require('dotenv').config()
 
@@ -27,6 +27,12 @@ export default function LogFood () {
         //e.preventDefault()
         dispatch(submit(inputFoodItems))
         e.target.reset()
+    }
+    const onDeleteSubmit =  async (e) => {
+        //e.preventDefault()
+        await dispatch(deleteRecord(e.target.id))
+        window.location.reload()
+        
     }
     
     
@@ -71,6 +77,7 @@ export default function LogFood () {
                                     <td>{item.id}</td>   
                                     <td>{item.calories}</td>   
                                     <td>{item.foodItemName}</td>   
+                                    <td><button type="button" id={item.id} onClick={onDeleteSubmit}>Delete</button></td>
                                 </tr>
                             )
                         })

@@ -1,0 +1,5 @@
+
+
+
+enabled=true
+supabaseKey="env(SUPABASE_KEY)"

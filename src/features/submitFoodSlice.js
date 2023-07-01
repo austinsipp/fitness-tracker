@@ -64,7 +64,22 @@ export const submitFoodSlice = createSlice({
             deleteData(action.payload)
             
             return newState
-        }/*,
+        },
+        editRecord: (state, action) => {
+            let newState = state
+            async function editData ({editedRecord, rowBeingEdited}) {
+                const response = await supabase.from('foodDataTest').update(editedRecord).eq("id",rowBeingEdited)
+                console.log("response is:",response)
+            }
+            editData(action.payload)
+
+            return newState
+        }
+        
+        
+        
+        
+        /*,
         getFromDatabase: async (state) => {
             let newState = state
             async function getData () {
@@ -83,5 +98,5 @@ export const submitFoodSlice = createSlice({
     }
 })
 
-export const { submit, deleteRecord  } = submitFoodSlice.actions
+export const { submit, deleteRecord, editRecord  } = submitFoodSlice.actions
 export default submitFoodSlice.reducer

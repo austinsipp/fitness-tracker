@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { store } from './stores/store'
 import { Provider } from 'react-redux'
+//import dotenv from 'dotenv'
+//dotenv.config()
 /*const express = require('express')
 const app = express()
 */

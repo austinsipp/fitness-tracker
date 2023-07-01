@@ -92,3 +92,12 @@ img {
 .selectedTabLink {
   color:gray;
 }
+
+nav li:hover {
+  border-left: solid gray 3px;
+  border-right: solid gray 3px;
+}
+
+nav a:hover {
+  color: gray;
+}

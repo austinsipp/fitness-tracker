@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { submit, deleteRecord, editRecord } from '../features/submitFoodSlice'
+//import { useSelector, useDispatch } from 'react-redux'
+//import { submit, deleteRecord, editRecord } from '../features/submitFoodSlice'
 import { createClient } from '@supabase/supabase-js'
 //import config from '../supabase/config.toml'
 
@@ -13,11 +13,11 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 
 
 export default function LogFood() {
-    const currentData = useSelector((state) => {
+    /*const currentData = useSelector((state) => {
         return state.currentState.displayData
     })
     console.log("currentData", currentData)
-    const dispatch = useDispatch()
+    const dispatch = useDispatch()*/
     const [inputFoodItems, setInputFoodItems] = useState({ foodItemName: '', calories: 0 });
     const [isLoading, setIsLoading] = useState(false);
     const [databaseFoodItems, setDatabaseFoodItems] = useState([])
@@ -28,19 +28,51 @@ export default function LogFood() {
 
 
     const onFoodSubmit = (e) => {
-        //e.preventDefault()
-        dispatch(submit(inputFoodItems))
+        e.preventDefault()
+        setIsLoading(false)
+        //setState({isLoading:false})
+        
+        //dispatch(submit(inputFoodItems))
+        submit(inputFoodItems)
         e.target.reset()
     }
+    const submit = (payload) => {
+        //console.log(payload)
+        //newState.foodData.push(action.payload)
+        //console.log("foodData:", newState.foodData)
+            
+        async function sendData (payload) {
+            const response = await supabase.from('foodDataTest').insert(payload)
+            console.log("response is:",response)
+            console.log("type is:",typeof response)
+            setIsLoading(true)
+            onPageLoad()
+        }
+        sendData(payload)
+    }
     const onDeleteSubmit = async (e) => {
-        //e.preventDefault()
-        await dispatch(deleteRecord(e.target.id))
-        window.location.reload()
+        e.preventDefault()
+        setIsLoading(false)
+        await deleteRecord({sentRecord: e.target.id, setIsLoading})
+        //dispatch(deleteRecord({sentRecord: e.target.id, setIsLoading}))
+        //window.location.reload()
 
+    }
+    const editRecord = (payload) => {
+        async function editData (payload) {
+            const response = await supabase.from('foodDataTest').update(payload.editedRecord).eq("id",payload.rowBeingEdited)
+            console.log("response is:",response)
+            setIsLoading(true)
+            onPageLoad()
+        }
+        editData(payload)
     }
     const onEditSubmit = (e) => {
         console.log("payload", {editedRecord, rowBeingEdited})
-        dispatch(editRecord({editedRecord, rowBeingEdited}))
+        setIsLoading(false)
+        editRecord({editedRecord, rowBeingEdited})
+        //dispatch(editRecord({editedRecord, rowBeingEdited, setIsLoading}))
+        setRowBeingEdited()
     }
     const onEditPress = async (e) => {
         const response = await supabase.from('foodDataTest').select().eq("id",e.target.id)
@@ -52,6 +84,22 @@ export default function LogFood() {
     }
     const onEditCancel = (e) => {
         setRowBeingEdited('')
+    }
+    const deleteRecord = async (payload) => {
+        async function deleteData ({sentRecord, setIsLoading}) {
+            const response = await supabase.from('foodDataTest').delete(sentRecord).eq("id",sentRecord)
+            console.log("response is:", response)
+            setIsLoading(true)
+            onPageLoad()
+        }
+        deleteData(payload)
+        /*let request = new Promise((resolve) => {
+            const response = supabase.from('foodDataTest').delete(payload.sentRecord).eq("id",payload.sentRecord)
+            console.log("response is",response)
+            debugger
+            resolve(true)
+        })
+        request.then(value => setIsLoading(value))*/
     }
 
 

@@ -52,14 +52,14 @@ export const submitFoodSlice = createSlice({
         deleteRecord: (state, action) => {
             //const { foodItemName, calories } = action.payload
             let newState = state
-            console.log(action.payload)
+            //console.log(action.payload)
             //newState.foodData.push(action.payload)
             //console.log("foodData:", newState.foodData)
             
-            async function deleteData (sentRecord) {
-                const response = await supabase.from('foodDataTest').delete(sentRecord).eq("id",action.payload)
-                console.log("response is:",response)
-                debugger
+            async function deleteData ({sentRecord, setIsLoading}) {
+                const response = await supabase.from('foodDataTest').delete(sentRecord).eq("id",sentRecord)
+                console.log("response is:", response)
+                setIsLoading(true)
             }
             deleteData(action.payload)
             
@@ -67,9 +67,10 @@ export const submitFoodSlice = createSlice({
         },
         editRecord: (state, action) => {
             let newState = state
-            async function editData ({editedRecord, rowBeingEdited}) {
+            async function editData ({editedRecord, rowBeingEdited, setIsLoading}) {
                 const response = await supabase.from('foodDataTest').update(editedRecord).eq("id",rowBeingEdited)
                 console.log("response is:",response)
+                setIsLoading(true)
             }
             editData(action.payload)
 
